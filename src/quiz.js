@@ -5,9 +5,15 @@ export default function Quiz({
   onClickPrevious,
   currentQuestion,
   selectedAnswer,
+  timer,
 }) {
+  const minutes = Math.floor(timer / 60);
+  const seconds = timer - minutes * 60;
   return (
     <div>
+      <p>
+        {minutes}: {seconds}
+      </p>
       <p>{question.question}</p>
       {question.type === "radio" && (
         <Radio

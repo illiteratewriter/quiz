@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Summary from "./Summary";
 import Quiz from "./quiz";
 import Score from "./Score";
@@ -30,6 +30,19 @@ function App() {
   let [answers, setAnswers] = React.useState([]);
   let [correctAnswer, setCorrectAnswer] = React.useState([]);
   const [quizEnd, setQuizEnd] = React.useState(false);
+
+  const [timer, setTimer] = useState(500);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prev) => prev - 1);
+      if (timer === 0) {
+        setQuizEnd(true);
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timer]);
 
   function onAnswerSelect(answerId) {
     let newAnswers = [...answers];
@@ -101,6 +114,7 @@ function App() {
       onClickPrevious={onClickPrevious}
       currentQuestion={currentQuestion}
       setCorrectAnswer={setCorrectAnswer}
+      timer={timer}
       selectedAnswer={answers[currentQuestion]}
     />
   );
