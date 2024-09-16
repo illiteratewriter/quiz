@@ -1,15 +1,9 @@
 import React from "react";
 
-export default function Score({ questionnaire, answers }) {
+export default function Score({ questionnaire, correctAnswer }) {
   const score = React.useMemo(() => {
-    let total = 0;
-    questionnaire.forEach((question, index) => {
-      if (question.answer === answers[index]) {
-        total++;
-      }
-    });
-    return total;
-  }, [questionnaire, answers]);
+    return correctAnswer.filter(Boolean).length;
+  }, [correctAnswer]);
   return (
     <div>
       {score}/{questionnaire.length}
